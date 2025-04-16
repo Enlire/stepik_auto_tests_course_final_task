@@ -8,10 +8,16 @@ class ProductPage(BasePage):
 		add_button.click()
 		self.solve_quiz_and_get_code()
 
-	def should_be_add_message(self):
-		assert self.is_element_present(*ProductPageLocators.ADD_MESSAGE), "'Added to basket' message is not presented"
-		assert self.browser.find_element(*ProductPageLocators.BOOK_NAME).text == self.browser.find_element(*ProductPageLocators.ADD_MESSAGE).text, "Book titles don't match"
+	def get_product_name(self):
+		return self.browser.find_element(*ProductPageLocators.BOOK_NAME).text
 
-	def should_be_basket_total_message(self):
+	def get_product_price(self):
+		return self.browser.find_element(*ProductPageLocators.BOOK_PRICE).text
+
+	def should_be_add_message(self, product_name):
+		assert self.is_element_present(*ProductPageLocators.ADD_MESSAGE), "'Added to basket' message is not presented"
+		assert product_name == self.browser.find_element(*ProductPageLocators.ADD_MESSAGE).text, "Book titles don't match"
+
+	def should_be_basket_total_message(self, product_price):
 		assert self.is_element_present(*ProductPageLocators.BASKET_TOTAL), "'Basket total' message is not presented"
-		assert self.browser.find_element(*ProductPageLocators.BOOK_PRICE).text == self.browser.find_element(*ProductPageLocators.BASKET_TOTAL).text, "Basket total does not match the book price"
+		assert product_price == self.browser.find_element(*ProductPageLocators.BASKET_TOTAL).text, "Basket total does not match the book price"
