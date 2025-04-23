@@ -4,7 +4,6 @@ from .pages.basket_page import BasketPage
 from selenium.webdriver.common.by import By
 import pytest
 
-# link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209?promo=midsummer"
 link = "http://selenium1py.pythonanywhere.com/"
 
 @pytest.mark.login_guest

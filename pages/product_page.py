@@ -1,12 +1,21 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 class ProductPage(BasePage):
 	def click_on_add_to_basket_button(self):
 		add_button = self.browser.find_element(*ProductPageLocators.ADD_BUTTON)
 		add_button.click()
-		self.solve_quiz_and_get_code()
+
+		# Ждём alert, и если он появляется — решаем задачу
+		try:
+			WebDriverWait(self.browser, 3).until(EC.alert_is_present())
+			self.solve_quiz_and_get_code()
+		except TimeoutException:
+			print("Alert did not appear, skipping quiz solving")
 
 	def get_product_name(self):
 		return self.browser.find_element(*ProductPageLocators.BOOK_NAME).text
