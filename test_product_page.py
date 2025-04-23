@@ -26,6 +26,7 @@ class TestUserAddToBasketFromProductPage():
 		email = fake.email()
 		password = ''.join(random.choices(string.ascii_letters + string.digits + "!@#$%^&*", k=12))
 		login_page.register_new_user(email, password)
+		login_page.should_be_authorized_user()
 
 	def test_user_cant_see_success_message(self, browser):
 		page = ProductPage(browser, link)
